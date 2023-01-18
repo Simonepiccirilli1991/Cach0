@@ -32,7 +32,7 @@ public class SessionConfiguration {
 
 	public SessionDto put(String number, SessionDto session){
 		IMap<String, SessionDto> map = hazelcastInstance.getMap(SESSIONS);
-		return map.putIfAbsent(number, session);
+		return map.put(number, session);
 	}
 
 	public SessionDto get(String key){
@@ -42,7 +42,7 @@ public class SessionConfiguration {
 
 	public String insert(String key, SessionDto request){
 		IMap<String, SessionDto> map = hazelcastInstance.getMap(SESSIONS);
-		map.put(key, request);
+		map.putIfAbsent(key, request);
 		return key;
 	}
 }

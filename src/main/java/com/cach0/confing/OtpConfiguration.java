@@ -31,7 +31,7 @@ public class OtpConfiguration {
 
 	public OtpDto put(String number, OtpDto car){
 		IMap<String, OtpDto> map = hazelcastInstance.getMap(OTPS);
-		return map.putIfAbsent(number, car);
+		return map.put(number, car);
 	}
 
 	public OtpDto get(String key){
@@ -41,7 +41,7 @@ public class OtpConfiguration {
 
 	public String insert(String key, OtpDto request){
 		IMap<String, OtpDto> map = hazelcastInstance.getMap(OTPS);
-		map.put(key, request);
+		map.putIfAbsent(key, request);
 		return key;
 	}
 }

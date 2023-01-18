@@ -1,8 +1,9 @@
 package com.cach0.model;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
-public class SessionDto {
+public class SessionDto implements Serializable {
 
 	private String bt;
 	private String username;
