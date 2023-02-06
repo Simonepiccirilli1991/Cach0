@@ -8,10 +8,12 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import com.cach0.model.PushDto;
 import com.cach0.model.request.OtpRequest;
 import com.cach0.model.request.SessionRequest;
 import com.cach0.model.response.BaseCacheResponse;
 import com.cach0.model.response.OtpResponse;
+import com.cach0.model.response.PushResponse;
 import com.cach0.model.response.SessionResponse;
 
 @SpringBootTest
@@ -21,6 +23,8 @@ public class ServiceTest {
 	OtpService otpService;
 	@Autowired
 	SessionService sessService;
+	@Autowired
+	PushService pushService;
 	
 	@Test
 	public void insertCacheTestOK() {
@@ -75,5 +79,48 @@ public class ServiceTest {
 		SessionResponse resp2= sessService.get("bt12");
 		
 		assertThat(resp2.getScope()).isEqualTo("l1");
+	}
+	
+//------------------ Push Test -----------------------------------------//
+	@Test
+	public void insertEGetPushTestOK() {
+		
+		PushDto request = new PushDto();
+		request.setBandaId("bancaId");
+		request.setBt("btPush");
+		request.setStatus("pending");
+		request.setTime(LocalDateTime.now());
+		
+		BaseCacheResponse iResp = pushService.insertPush(request);
+		
+		assertThat(iResp.getInsert()).isTrue();
+		
+		
+		PushResponse response = pushService.getPush("btPush");
+		
+		assertThat(response.getBandaId()).isEqualTo("bancaId");
+		assertThat(response.getStatus()).isEqualTo("pending");
+		
+	}
+	
+	@Test
+	public void acceptPusheGetTestOK() {
+		
+		PushDto request = new PushDto();
+		request.setBandaId("bancaId");
+		request.setBt("btPush2");
+		request.setStatus("pending");
+		request.setTime(LocalDateTime.now());
+		
+		BaseCacheResponse iResp = pushService.insertPush(request);
+		
+		assertThat(iResp.getInsert()).isTrue();
+		
+		request.setStatus("accept");
+		
+		pushService.updateSatusPush(request);
+		
+		assertThat(pushService.getPush("btPush2").getStatus()).isEqualTo("accept");
+		
 	}
 }

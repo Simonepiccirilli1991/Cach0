@@ -15,15 +15,15 @@ public class SessionConfiguration {
 
 	public static final String SESSIONS = "sessions";
 	private final HazelcastInstance hazelcastInstance 
-	= Hazelcast.newHazelcastInstance(createConfig1());
+	= Hazelcast.newHazelcastInstance(createConfigSession());
 
-	public Config createConfig1() {
+	public Config createConfigSession() {
 		Config config = new Config();
-		config.addMapConfig(mapConfig1());
+		config.addMapConfig(mapConfig());
 		return config;
 	}
 
-	private MapConfig mapConfig1() {
+	private MapConfig mapConfig() {
 		MapConfig mapConfig = new MapConfig(SESSIONS);
 		mapConfig.setTimeToLiveSeconds(800);
 		mapConfig.setMaxIdleSeconds(620);
@@ -40,9 +40,9 @@ public class SessionConfiguration {
 		return map.get(key);
 	}
 
-	public String insert(String key, SessionDto request){
+	public String insert(String key, SessionDto session){
 		IMap<String, SessionDto> map = hazelcastInstance.getMap(SESSIONS);
-		map.putIfAbsent(key, request);
+		map.putIfAbsent(key, session);
 		return key;
 	}
 }

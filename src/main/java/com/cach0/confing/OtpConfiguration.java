@@ -14,9 +14,9 @@ public class OtpConfiguration {
 
 	public static final String OTPS = "otps";
 	private final HazelcastInstance hazelcastInstance 
-	= Hazelcast.newHazelcastInstance(createConfig2());
+	= Hazelcast.newHazelcastInstance(createConfigOtp());
 
-	public Config createConfig2() {
+	public Config createConfigOtp() {
 		Config config = new Config();
 		config.addMapConfig(mapConfig());
 		return config;
@@ -29,9 +29,9 @@ public class OtpConfiguration {
 		return mapConfig;
 	}
 
-	public OtpDto put(String number, OtpDto car){
+	public OtpDto put(String number, OtpDto dto){
 		IMap<String, OtpDto> map = hazelcastInstance.getMap(OTPS);
-		return map.put(number, car);
+		return map.put(number, dto);
 	}
 
 	public OtpDto get(String key){
@@ -39,9 +39,9 @@ public class OtpConfiguration {
 		return map.get(key);
 	}
 
-	public String insert(String key, OtpDto request){
+	public String insert(String key, OtpDto dto){
 		IMap<String, OtpDto> map = hazelcastInstance.getMap(OTPS);
-		map.putIfAbsent(key, request);
+		map.putIfAbsent(key, dto);
 		return key;
 	}
 }
