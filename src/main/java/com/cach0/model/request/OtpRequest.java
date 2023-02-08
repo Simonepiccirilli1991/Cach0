@@ -48,5 +48,11 @@ public class OtpRequest {
 		this.otp = otp;
 	}
 	
+	@Override
+	public String toString() {
+		return "OtpRequest [transactionId=" + transactionId + ", bt=" + bt + ", timestamp=" + timestamp + ", profilo="
+				+ profilo + ", timestampDate=" + timestampDate + ", otp=" + otp + "]";
+	}
+	
 	
 }

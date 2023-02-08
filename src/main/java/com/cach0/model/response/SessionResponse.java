@@ -25,4 +25,10 @@ public class SessionResponse extends BaseCacheResponse {
 		this.valid = valid;
 	}
 	
+	@Override
+	public String toString() {
+		return "SessionResponse [bt=" + bt + ", scope=" + scope + ", valid=" + valid + "]";
+	}
+	
+	
 }

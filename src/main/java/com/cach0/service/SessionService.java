@@ -2,6 +2,8 @@ package com.cach0.service;
 
 import java.time.LocalDateTime;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
@@ -17,7 +19,11 @@ public class SessionService {
 	@Autowired
 	SessionConfiguration sessionSer;
 	
+	Logger logger = LoggerFactory.getLogger(SessionService.class);
+	
 	public SessionResponse insert(SessionRequest request) {
+		
+		logger.info("API: SessionService - insertSession - START with raw request: {}", request);
 		
 		SessionResponse response = new SessionResponse();
 		SessionDto session = new SessionDto();
@@ -31,7 +37,7 @@ public class SessionService {
 			sessionSer.insert(request.getBt(), session);
 			
 		}catch(Exception e) {
-			
+			logger.error("Error on SessionService - insert", e);
 			response.setInsert(false);
 			response.setMsg("Error on insert");
 			return response;
@@ -39,13 +45,16 @@ public class SessionService {
 		
 		response.setInsert(true);
 		response.setMsg("T'appo!");
+		logger.info("API: SessionService - insert - END with response: {}", response);
 		
 		return response;
 		
 	}
 	
 	public SessionResponse get(String bt) {
-
+		
+		logger.info("API: SessionService - get session - START with raw request: {}", bt);
+		
 		SessionResponse response = new SessionResponse();
 
 		SessionDto dto = null;
@@ -54,6 +63,7 @@ public class SessionService {
 			dto = sessionSer.get(bt);
 
 		}catch(Exception e) {
+			logger.error("Error on SessionService - get", e);
 			response.setNoFound(true);
 			response.setMsg("error on retryving on cache");
 			return response;
@@ -70,11 +80,14 @@ public class SessionService {
 			response.setValid(true);
 			response.setMsg("T'appo!");
 		}
-
+		logger.info("API: SessionService - update - END with response: {}", response);
+		
 		return response;
 	}
 	
 	public SessionResponse updateSession(SessionRequest request) {
+		
+		logger.info("API: SessionService - updateSession - START with raw request: {}", request);
 		
 		SessionResponse response = new SessionResponse();
 		
@@ -87,6 +100,7 @@ public class SessionService {
 			sessionSer.put(request.getBt(), dto);
 			
 		}catch(Exception e) {
+			logger.error("Error on SessionService - update", e);
 			response.setNoFound(true);
 			response.setMsg("error on retryving on cache");
 			return response;
@@ -95,6 +109,8 @@ public class SessionService {
 		response.setInsert(true);
 		response.setValid(true);
 		response.setMsg("T'appo!");
+		logger.info("API: SessionService - update - END with response: {}", response);
+		
 		return response;
 	}
 }

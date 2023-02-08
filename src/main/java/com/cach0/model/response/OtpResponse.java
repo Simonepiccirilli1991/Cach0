@@ -40,4 +40,12 @@ public class OtpResponse extends BaseCacheResponse{
 	public void setOtp(String otp) {
 		this.otp = otp;
 	}
+	
+	@Override
+	public String toString() {
+		return "OtpResponse [bt=" + bt + ", timestamp=" + timestamp + ", profilo=" + profilo + ", timestampDate="
+				+ timestampDate + ", otp=" + otp + "]";
+	}
+	
+	
 }

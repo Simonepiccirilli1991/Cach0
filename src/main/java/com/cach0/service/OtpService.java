@@ -1,5 +1,7 @@
 package com.cach0.service;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
@@ -15,11 +17,13 @@ public class OtpService {
 
 	@Autowired
 	OtpConfiguration otp;
-
+	
+	Logger logger = LoggerFactory.getLogger(OtpService.class);
 	
 	
 	public BaseCacheResponse insert(OtpRequest request) {
-
+		
+		logger.info("API: OtpService - insert - START with raw request: {}", request);
 		BaseCacheResponse response = new BaseCacheResponse();
 
 		String trxId = request.getTransactionId();
@@ -36,6 +40,7 @@ public class OtpService {
 			otp.insert(trxId, dto);
 
 		}catch(Exception e) {
+			logger.error("Error on OtpService - insert", e);
 			response.setInsert(false);
 			response.setMsg("Error on insert");
 			return response;
@@ -43,13 +48,15 @@ public class OtpService {
 
 		response.setInsert(true);
 		response.setMsg("T'appo!");
-
+		logger.info("API: OtpService - insert - END with response: {}", response);
+		
 		return response;	
 	}
 	
 	
 	public OtpResponse get(String trxId) {
 		
+		logger.info("API: OtpService - get - START with raw request: {}", trxId);
 		OtpResponse response = new OtpResponse();
 		
 		OtpDto dto = null;
@@ -58,6 +65,7 @@ public class OtpService {
 			dto = otp.get(trxId);
 			
 		}catch(Exception e) {
+			logger.error("Error on OtpService - get", e);
 			response.setNoFound(true);
 			response.setMsg("error on retryving on cache");
 			return response;
@@ -76,6 +84,7 @@ public class OtpService {
 			response.setTimestampDate(dto.getTimestampDate());
 			response.setMsg("T'appo!");
 		}
+		logger.info("API: OtpService - get - END with response: {}", response);
 		
 		return response;
 	}

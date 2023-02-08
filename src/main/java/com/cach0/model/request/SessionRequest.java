@@ -29,5 +29,10 @@ public class SessionRequest {
 		this.scope = scope;
 	}
 	
+	@Override
+	public String toString() {
+		return "SessionRequest [bt=" + bt + ", username=" + username + ", scope=" + scope + "]";
+	}
+	
 	
 }
