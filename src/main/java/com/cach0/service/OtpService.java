@@ -59,7 +59,7 @@ public class OtpService {
 		logger.info("API: OtpService - get - START with raw request: {}", trxId);
 		OtpResponse response = new OtpResponse();
 		
-		OtpDto dto = null;
+		OtpDto dto;
 		try {
 			
 			dto = otp.get(trxId);
