@@ -34,5 +34,10 @@ public class PushDto implements Serializable{
 	public void setStatus(String status) {
 		this.status = status;
 	}
+	@Override
+	public String toString() {
+		return "PushDto [bt=" + bt + ", bandaId=" + bandaId + ", time=" + time + ", status=" + status + "]";
+	}
+	
 	
 }
